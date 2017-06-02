@@ -1,5 +1,8 @@
 package UI;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import semiglobalalignment.SemiGlobalAlignment;
 
 /*
@@ -14,6 +17,7 @@ import semiglobalalignment.SemiGlobalAlignment;
 //import localalignment.SemiGlobalAlignmentUI;
 
 import javax.swing.JOptionPane;
+import static semiglobalalignment.SemiGlobalAlignment.fungsi.pam250;
 public class SemiGlobalAlignmentUI extends javax.swing.JFrame {
     //public static SemiGlobalAlignmentUI main= new SemiGlobalAlignmentUI();
     /**
@@ -42,9 +46,10 @@ public class SemiGlobalAlignmentUI extends javax.swing.JFrame {
         properties = new java.awt.Button();
         errorQ = new javax.swing.JLabel();
         errorD = new javax.swing.JLabel();
+        listProtein = new java.awt.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Semi Global Alignment");
+        setTitle("Semi Global Alignment using PAM250 and BLOSUM62");
         setFocusTraversalPolicyProvider(true);
         setName("Local Alignment"); // NOI18N
 
@@ -67,7 +72,7 @@ public class SemiGlobalAlignmentUI extends javax.swing.JFrame {
         });
 
         labelSeqQ.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
-        labelSeqQ.setText("Please input protein sequence q (separate by a space)");
+        labelSeqQ.setText("Please input protein sequence q (separated by a space)");
 
         sequenceD.setForeground(new java.awt.Color(0, 0, 0));
         sequenceD.setText("sequence d");
@@ -83,10 +88,10 @@ public class SemiGlobalAlignmentUI extends javax.swing.JFrame {
         });
 
         labelSeqD.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
-        labelSeqD.setText("Please input protein sequence d  (separate by a space)");
+        labelSeqD.setText("Please input protein sequence d  (separated by a space)");
 
-        Align.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        Align.setLabel("Align");
+        Align.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        Align.setText("ALIGN");
         Align.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AlignMouseClicked(evt);
@@ -106,37 +111,42 @@ public class SemiGlobalAlignmentUI extends javax.swing.JFrame {
         errorD.setForeground(new java.awt.Color(204, 0, 0));
         errorD.setText("this field can not be empty");
 
+        listProtein.setLabel("List of Protein");
+        listProtein.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listProteinMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(errorD)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(labelSeqD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(sequenceD, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(errorQ)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(labelSeqQ, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(sequenceQ, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(48, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(properties, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
-                .addComponent(Align, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(Align, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sequenceD, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(sequenceQ, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(errorD)
+                            .addComponent(labelSeqD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(errorQ)
+                            .addComponent(labelSeqQ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(properties, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63)
+                                .addComponent(listProtein, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 162, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addContainerGap()
                 .addComponent(labelSeqQ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addComponent(sequenceQ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -148,14 +158,16 @@ public class SemiGlobalAlignmentUI extends javax.swing.JFrame {
                 .addComponent(sequenceD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(errorD)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Align, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(properties, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(listProtein, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(properties, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(Align, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        setBounds(200, 100, 379, 332);
+        setBounds(200, 100, 510, 332);
     }// </editor-fold>//GEN-END:initComponents
 
     private void sequenceQActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sequenceQActionPerformed
@@ -228,6 +240,27 @@ public class SemiGlobalAlignmentUI extends javax.swing.JFrame {
 	}// TODO add your handling code here:
     }//GEN-LAST:event_AlignMouseClicked
 
+    private void listProteinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listProteinMouseClicked
+       try{
+           String a="";
+           FileInputStream in=new FileInputStream("list of protein.txt");
+           //Scanner baca = new Scanner(in);
+           BufferedReader line=new BufferedReader(new InputStreamReader(in));
+           String temp=line.readLine();
+           while (temp!=null){
+               a=a+temp+"\n";
+               temp=line.readLine();
+           } 
+           UI.proteinList view=new UI.proteinList();
+           view.setVisible(true);
+           view.viewArea.setText(a);
+        }
+        catch(Exception e){
+           System.out.println(e);
+        }
+// TODO add your handling code here:
+    }//GEN-LAST:event_listProteinMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -268,6 +301,7 @@ public class SemiGlobalAlignmentUI extends javax.swing.JFrame {
     private javax.swing.JLabel errorQ;
     private java.awt.Label labelSeqD;
     private java.awt.Label labelSeqQ;
+    private java.awt.Button listProtein;
     private java.awt.Button properties;
     private java.awt.TextField sequenceD;
     private java.awt.TextField sequenceQ;

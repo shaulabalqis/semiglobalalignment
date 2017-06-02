@@ -5,6 +5,8 @@
  */
 package UI;
 
+import semiglobalalignment.SemiGlobalAlignment;
+
 /**
  *
  * @author ShaulaBalqis
@@ -29,17 +31,24 @@ public class proteinList extends javax.swing.JFrame {
 
         labelListProtein = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listProtein = new javax.swing.JTextPane();
+        viewArea = new javax.swing.JTextPane();
         OK = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("List of Protein");
 
         labelListProtein.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelListProtein.setText("List of Protein");
 
-        jScrollPane1.setViewportView(listProtein);
+        viewArea.setEditable(false);
+        jScrollPane1.setViewportView(viewArea);
 
         OK.setText("OK");
+        OK.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                OKMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -50,7 +59,7 @@ public class proteinList extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelListProtein)
-                        .addGap(0, 212, Short.MAX_VALUE))
+                        .addGap(0, 101, Short.MAX_VALUE))
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -63,14 +72,20 @@ public class proteinList extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(labelListProtein)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(OK)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void OKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OKMouseClicked
+        SemiGlobalAlignment.fungsi.prim.setEnabled(true);
+        this.dispose();// TODO add your handling code here:
+        // TODO add your handling code here:
+    }//GEN-LAST:event_OKMouseClicked
 
     /**
      * @param args the command line arguments
@@ -111,6 +126,6 @@ public class proteinList extends javax.swing.JFrame {
     private javax.swing.JButton OK;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelListProtein;
-    public static javax.swing.JTextPane listProtein;
+    public static javax.swing.JTextPane viewArea;
     // End of variables declaration//GEN-END:variables
 }
